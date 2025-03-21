@@ -18,30 +18,30 @@ export const accordion = function (gsapContext) {
   // utility function to open or close accordions
   const openAccordion = function (item, open = true) {
     //get state of items
-    const state = Flip.getState(item, {
-      props: 'backgroundColor,margin',
-      nested: true,
-      absolute: false,
-    });
+    // const state = Flip.getState(item, {
+    //   props: 'backgroundColor,margin',
+    //   nested: true,
+    //   absolute: false,
+    // });
     if (open === true) {
       item.classList.add(ACTIVE_CLASS);
     } else {
       item.classList.remove(ACTIVE_CLASS);
     }
-    // animate elements
-    Flip.from(state, {
-      duration: 0.6,
-      ease: 'power1.out',
-      onStart: () => {
-        item.style.overflow = 'hidden';
-      },
-      onComplete: () => {
-        if (open) {
-          item.style.overflow = 'visible';
-        }
-        ScrollTrigger.refresh();
-      },
-    });
+    // // animate elements
+    // Flip.from(state, {
+    //   duration: 0.6,
+    //   ease: 'power1.out',
+    //   onStart: () => {
+    //     item.style.overflow = 'hidden';
+    //   },
+    //   onComplete: () => {
+    //     if (open) {
+    //       item.style.overflow = 'visible';
+    //     }
+    //     ScrollTrigger.refresh();
+    //   },
+    // });
   };
   ////////////////////////
   // event logic

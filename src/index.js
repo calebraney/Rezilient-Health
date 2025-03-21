@@ -1,6 +1,7 @@
 import { attr } from './utilities';
 import { accordion } from './interactions/accordion';
 import { hoverActive } from './interactions/hover-active';
+import { initLenis } from './interactions/lenis';
 import { marquee } from './interactions/marquee';
 import { modal } from './interactions/modal';
 import { scrollIn } from './interactions/scroll-in';
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //////////////////////////////
   //Global Variables
+  let lenis;
 
   //////////////////////////////
   //Control Functions on page load
@@ -35,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
       (gsapContext) => {
         let { isMobile, isTablet, isDesktop, reduceMotion } = gsapContext.conditions;
         //functional interactions
+        lenis = initLenis();
+
         hoverActive(gsapContext);
         accordion(gsapContext);
         marquee(gsapContext);
