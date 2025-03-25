@@ -59,13 +59,13 @@ export const modal = function (gsapContext, lenis) {
   const openModal = function (modal) {
     if (!modal) return;
     modal.showModal();
-    stopScroll();
+    stopScroll(lenis);
     activeModal = modal;
   };
   const closeModal = function (modal) {
     if (!modal) return;
     modal.close();
-    startScroll();
+    startScroll(lenis);
     activemodal = false;
   };
 };
