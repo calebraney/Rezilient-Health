@@ -1,4 +1,27 @@
 import SplitType from 'split-type';
+
+export const stopScroll = function (lenis) {
+  //non lenis version
+  if (lenis) {
+    //lenis version
+    lenis.stop();
+  } else {
+    const body = document.querySelector('body');
+    const NO_SCROLL_CLASS = 'no-scroll';
+    body.classList.add(NO_SCROLL_CLASS);
+  }
+};
+export const startScroll = function (lenis) {
+  //non lenis version
+  if (lenis) {
+    //lenis version
+    lenis.start();
+  } else {
+    const body = document.querySelector('body');
+    const NO_SCROLL_CLASS = 'no-scroll';
+    body.classList.remove(NO_SCROLL_CLASS);
+  }
+};
 // attribute value checker
 export const attr = function (defaultVal, attrVal) {
   //get the type of the default

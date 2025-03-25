@@ -9,7 +9,7 @@ import { scrolling } from './interactions/scrolling';
 
 document.addEventListener('DOMContentLoaded', function () {
   // Comment out for production
-  console.log('Local Script');
+  // console.log('Local Script');
   // register gsap plugins if available
   if (gsap.ScrollTrigger !== undefined) {
     gsap.registerPlugin(ScrollTrigger);
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
         hoverActive(gsapContext);
         accordion(gsapContext);
         marquee(gsapContext);
-        modal(gsapContext);
+        modal(gsapContext, lenis);
         //conditional interactions
         if (!reduceMotion) {
           scrollIn(gsapContext);

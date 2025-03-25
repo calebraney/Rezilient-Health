@@ -1,16 +1,15 @@
-import { attr, checkBreakpoints } from '../utilities';
+import { attr, attrIfSet, startScroll, stopScroll } from '../utilities';
 
-export const modal = function (gsapContext, pagePlayers, pagePlayerComponents) {
+export const modal = function (gsapContext, lenis) {
   const ANIMATION_ID = 'modal';
   //Selectors
   const MODAL_WRAP = '[data-ix-modal="wrap"]'; //a modal item
-  const MODAL_TRIGGER = '[data-ix-modal="trigger"]'; //element to trigger modal
+  const MODAL_TRIGGER = 'data-ix-modal-trigger'; //id of element to trigger modal
   const MODAL_CLOSE_BTN = '[data-ix-modal="close"]';
   const TIMEOUT = 'data-ix-modal-timeout';
+  const MODAL_TRIGGER_DEFAULT = 'blank-id';
   const DEFAULT_TIMEOUT = 3;
 
-  //classes
-  const NO_SCROLL = 'no-scroll';
   //global variables
   let activeModal = false;
 
@@ -22,13 +21,25 @@ export const modal = function (gsapContext, pagePlayers, pagePlayerComponents) {
     //get the parent element of the trigger, and find the modal within that element
     const closeButtons = [...modal.querySelectorAll(MODAL_CLOSE_BTN)];
     const timeout = attr(DEFAULT_TIMEOUT, modal.getAttribute(TIMEOUT));
+    const triggerID = attr(MODAL_TRIGGER_DEFAULT, modal.getAttribute(MODAL_TRIGGER));
 
-    //open modal after timeout
-    setTimeout(() => {
-      openModal();
-    }, timeout * 1000);
+    //if trigger id attribute is not default
+    if (triggerID !== MODAL_TRIGGER_DEFAULT) {
+      const trigger = document.querySelector(`#${triggerID}`);
+      //find trigger and open modal on click
+      if (trigger) {
+        trigger.addEventListener('click', (e) => {
+          // Find the closest dialog parent and close it
+          openModal(modal);
+        });
+      }
+    } else {
+      //otherwise open based on timer
+      setTimeout(() => {
+        openModal(modal);
+      }, timeout * 1000);
+    }
 
-    //get the player for this modal
     // process key events in the modal
     modal.addEventListener('keydown', (e) => {
       // if escape is pressed when modal is open, close lightbox
@@ -37,27 +48,24 @@ export const modal = function (gsapContext, pagePlayers, pagePlayerComponents) {
       }
     });
 
-    // process click events in the modal
-    modal.addEventListener('click', (e) => {
-      // Check if the clicked element is a close button inside a dialog
-      if (e.target.closest(MODAL_CLOSE_BTN) !== null) {
-        // Find the closest dialog parent and close it
+    // process click events for close buttons
+    closeButtons.forEach((item) => {
+      item.addEventListener('click', (e) => {
         closeModal(modal);
-      }
+      });
     });
   });
 
   const openModal = function (modal) {
     if (!modal) return;
     modal.showModal();
-    //   modalThumbnails(modal, player);
-    body.classList.add(NO_SCROLL);
+    stopScroll();
     activeModal = modal;
   };
   const closeModal = function (modal) {
     if (!modal) return;
     modal.close();
-    body.classList.remove(NO_SCROLL);
+    startScroll();
     activemodal = false;
   };
 };
